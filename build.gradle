@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'org.fusion'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url = "https://oss.sonatype.org/content/groups/public/" }
+    maven { url = "https://nexus.scarsz.me/content/groups/public/" }
+}
+
+dependencies {
+    // Spigot-api
+    compileOnly "org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT"
+    // MiniMessage
+    implementation "net.kyori:adventure-text-minimessage:4.19.0"
+    // Placeholder-api
+    implementation "me.clip:placeholderapi:2.11.6"
+    // RyseInventory
+    implementation "io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7"
+    // HikariCP
+    implementation "com.zaxxer:HikariCP:5.0.1"
+    // H2
+    implementation 'com.h2database:h2:2.1.214'
+    // Lombok
+    compileOnly "org.projectlombok:lombok:1.18.36"
+    annotationProcessor "org.projectlombok:lombok:1.18.36"
+}
+
+def targetJavaVersion = 21
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

@@ -1,0 +1,26 @@
+# EN - Database parameters | RU - Параметры датабазы
+database:
+  # EN - Database type MySQL / H2 | RU - Тип датабазы MySQl / H2
+  type: H2
+  # EN - JDBC connection string | RU - Ключ подключения JDBC
+  url: ""
+  # EN - Username | RU - Имя пользователя
+  user: ""
+  # EN - Password | RU - Пароль
+  password: ""
+
+# EN - Plugin settings | RU - Настройки плагина
+settings:
+  # EN - Reputation menu settings | RU - Настройки меню репутации
+  menu:
+    # EN - Menu style (1 - 3) 1 - Panels / 2 - Blocks / 3 - Heads | RU - Стиль меню (1 - 3) 1 - Панели / 2 - Блоки / 3 - Головы
+    style: 1
+    # EN - Menu title | RU - Название меню
+    name: "Репутация игрока %player%"
+    # EN - Menu background material | RU - Материал заднего фона меню
+    background_material: BLACK_STAINED_GLASS_PANE
+    # EN - Plus reputation head texture (Only on third style) | RU - Текстура головы повышения репутации (Только при третьем стиле)
+    plus_head_url: "http://textures.minecraft.net/texture/6c48ddfdcd6d98a1b0aa3c71e8dad4edde732a68b2b0a5ab142600dca7587c32"
+    # EN - Minus reputation head texture (Only on third style) | RU - Текстура головы понижения репутации (Только при третьем стиле)
+    minus_head_url: "http://textures.minecraft.net/texture/6f05afec2a6ec675cd5505a8f44bb6a4d556935689528321ead4edef685f2d10"
+
