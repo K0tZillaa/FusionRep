@@ -8,10 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.fusion.fusionRep.cmd.MyReputationCommand;
 import org.fusion.fusionRep.cmd.ReputationCommand;
 import org.fusion.fusionRep.event.ReputationMenuOnClick;
-import org.fusion.fusionRep.util.DatabaseController;
-import org.fusion.fusionRep.util.DatabaseManager;
-import org.fusion.fusionRep.util.MenuProviders;
-import org.fusion.fusionRep.util.ReputationMenu;
+import org.fusion.fusionRep.util.*;
 
 import java.util.Objects;
 
@@ -25,6 +22,7 @@ public final class FusionRep extends JavaPlugin {
     MenuProviders menuProviders;
     DatabaseManager databaseManager;
     DatabaseController databaseController;
+    FormatMessage formatMessage;
 
     @Getter
     private final InventoryManager manager = new InventoryManager(this);
@@ -40,11 +38,14 @@ public final class FusionRep extends JavaPlugin {
         reputationMenu = new ReputationMenu(this);
         menuProviders = new MenuProviders(this);
         menuProviders.setBackgroundMaterial();
+        formatMessage = new FormatMessage();
 
         Objects.requireNonNull(this.getCommand("myreputation")).setExecutor(myReputationCommand = new MyReputationCommand(this));
-//        Objects.requireNonNull(this.getCommand("reputation")).setExecutor(reputationCommand = new ReputationCommand());
+        Objects.requireNonNull(this.getCommand("reputation")).setExecutor(reputationCommand = new ReputationCommand(this));
 
         Bukkit.getPluginManager().registerEvents(reputationMenuOnClick = new ReputationMenuOnClick(this), this);
+
+        new Placeholders(this).register();
     }
 
     @Override

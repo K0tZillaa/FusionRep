@@ -1,7 +1,7 @@
 # EN - Database parameters | RU - Параметры датабазы
 database:
   # EN - Database type MySQL / H2 | RU - Тип датабазы MySQl / H2
-  type: H2
+  type: "H2"
   # EN - JDBC connection string | RU - Ключ подключения JDBC
   url: ""
   # EN - Username | RU - Имя пользователя
@@ -15,12 +15,70 @@ settings:
   menu:
     # EN - Menu style (1 - 3) 1 - Panels / 2 - Blocks / 3 - Heads | RU - Стиль меню (1 - 3) 1 - Панели / 2 - Блоки / 3 - Головы
     style: 1
-    # EN - Menu title | RU - Название меню
-    name: "Репутация игрока %player%"
     # EN - Menu background material | RU - Материал заднего фона меню
-    background_material: BLACK_STAINED_GLASS_PANE
+    background_material: "BLACK_STAINED_GLASS_PANE"
     # EN - Plus reputation head texture (Only on third style) | RU - Текстура головы повышения репутации (Только при третьем стиле)
     plus_head_url: "http://textures.minecraft.net/texture/6c48ddfdcd6d98a1b0aa3c71e8dad4edde732a68b2b0a5ab142600dca7587c32"
     # EN - Minus reputation head texture (Only on third style) | RU - Текстура головы понижения репутации (Только при третьем стиле)
     minus_head_url: "http://textures.minecraft.net/texture/6f05afec2a6ec675cd5505a8f44bb6a4d556935689528321ead4edef685f2d10"
 
+# EN - Localization Settings / RU - Настройки локализации
+localization:
+  # EN - Localization of the reputation command  / RU - Локализация команды репутации
+  reputation_command:
+    # EN - Incorrect syntax message  / RU - Сообщение о неправильном синтаксисе
+    usage: "<green>Usage: /reputation <player / top>"
+    # EN - Player reputation message / RU - Сообщение с репутацией игрока
+    player_reputation: "<green>%player%'s reputation: %reputation%"
+    # EN - Message that the player is not found / RU - Сообщение о том, что игрок не найден
+    player_not_found_message: "<green>Player not found or not online."
+    # EN - Localization of the top by reputation / RU - Локализация топа по репутации
+    top:
+      # EN - Title of the reputation top list / RU - Оглавление списка топа репутации
+      title: "<green>=== Top 10 players by reputation% ==="
+      # EN - Reputation top list item / RU - Пункт списка топа репутации
+      player_in_top: "<green>%rank%. %player% %reputation%"
+      # EN - Sender's place in the ranking / RU - Место отправителя в рейтинге
+      sender_place: "<green>Your place in the rating: %rank%"
+  # EN - Localization of my reputation command / RU - Локализация команды своей репутации
+  my_reputation_command:
+    # EN - Player reputation message / RU - Сообщение с репутацией игрока
+    player_reputation: "<green>Your reputation: %reputation%"
+  # EN - Localization of the reputation menu / RU - Локализация меню репутации
+  reputation_menu:
+    # EN - Menu title | RU - Название меню
+    title: "%player%'s reputation"
+    #  EN - Message to sender about reputation increase / RU - Сообщение отправителю о повышении репутации
+    plus_reputation_sender: "<green>You have increased the player's reputation, his current reputation: %reputation%"
+    #  EN - Communicating the purpose of reputation enhancement / RU - Сообщение цели о повышении репутации
+    plus_reputation_target: "<green>Player %player% has increased your reputation, your current reputation is: %reputation%"
+    #  EN - Message to sender about reputation downgrade / RU - Сообщение отправителю о понижении репутации
+    minus_reputation_sender: "<green>You have lowered the player's reputation, his current reputation: %reputation%"
+    #  EN - Communicating the target of a reputation downgrade / RU - Сообщение цели о понижении репутации
+    minus_reputation_target: "<green>Player %player% has lowered your reputation, your current reputation is: %reputation%"
+    #  EN - Items on the menu / RU - Предметы в меню
+    items:
+      #  EN - Reputation boost button / RU - Кнопка повышения репутации
+      plus_reputation_button:
+        #  EN - Title / RU - Название
+        title: "+REP"
+        #  EN - Lore / RU - Описание
+        lore: "+1 to the player's reputation"
+      #  EN - Reputation downgrade button / RU - Кнопка понижения репутации
+      minus_reputation_button:
+        #  EN - Title / RU - Название
+        title: "-REP"
+        #  EN - Lore / RU - Описание
+        lore: "-1 to the player's reputation"
+      #  EN - Menu exit button / RU - Кнопка выхода из меню
+      exit_button:
+        #  EN - Title / RU - Название
+        title: "Exit"
+        #  EN - Lore / RU - Описание
+        lore: "Close the menu"
+      #  EN - Background button / RU - Фоновая кнопка
+      background:
+        #  EN - Title / RU - Название
+        title: ""
+        #  EN - Lore / RU - Описание
+        lore: "Close the menu"

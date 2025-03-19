@@ -1,5 +1,6 @@
 package org.fusion.fusionRep.cmd;
 
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,8 +11,11 @@ import org.jetbrains.annotations.NotNull;
 public class MyReputationCommand implements CommandExecutor {
     private final FusionRep plugin;
 
+    private final String playerReputationMessage;
+
     public MyReputationCommand(FusionRep plugin) {
         this.plugin = plugin;
+        this.playerReputationMessage = plugin.getCfg().getString("localization.my_reputation_command.player_reputation", "Your reputation: %reputation%");
     }
 
     @Override
@@ -19,16 +23,12 @@ public class MyReputationCommand implements CommandExecutor {
         if (!(commandSender instanceof Player player)) {
             return true;
         }
+        Audience sender = (Audience) commandSender;
+
         int reputation = plugin.getDatabaseController().getReputation(player);
-        String reputationFormatted;
-        if (reputation < 0) {
-            reputationFormatted = "§c" + reputation;
-        } else if (reputation == 0) {
-            reputationFormatted = "§e" + reputation;
-        } else {
-            reputationFormatted = "§a" + reputation;
-        }
-        player.sendMessage("Ваша репутация: " + reputationFormatted);
+        String playerReputation = plugin.getFormatMessage().formatReputation(Integer.parseInt(Integer.toString(reputation)));
+        sender.sendMessage(plugin.getFormatMessage().parse(player, playerReputationMessage.replace("%reputation%", playerReputation)));
+
         return true;
     }
 }

@@ -2,9 +2,15 @@ name: FusionRep
 version: '1.0'
 main: org.fusion.fusionRep.FusionRep
 api-version: '1.21'
+depend: [PlaceholderAPI]
 commands:
   myreputation:
     aliases:
       - myrep
     description: Show your reputation
-    usage: /myreputation
+    usage: /myrep
+  reputation:
+    aliases:
+      - rep
+    description: Show reputation top / Show player reputation
+    usage: /rep

@@ -4,13 +4,14 @@ plugins {
 }
 
 group = 'org.fusion'
-version = '1.0'
+version = '1.1'
 
 repositories {
     mavenCentral()
     maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
     maven { url = "https://nexus.scarsz.me/content/groups/public/" }
+    maven { url = 'https://repo.extendedclip.com/releases/' }
 }
 
 dependencies {
@@ -18,17 +19,17 @@ dependencies {
     compileOnly "org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT"
     // MiniMessage
     implementation "net.kyori:adventure-text-minimessage:4.19.0"
-    // Placeholder-api
-    implementation "me.clip:placeholderapi:2.11.6"
     // RyseInventory
-    implementation "io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7"
+    shadow "io.github.rysefoxx.inventory:RyseInventory-Plugin:1.5.7"
     // HikariCP
-    implementation "com.zaxxer:HikariCP:5.0.1"
+    shadow "com.zaxxer:HikariCP:5.0.1"
     // H2
-    implementation 'com.h2database:h2:2.1.214'
+    shadow 'com.h2database:h2:2.1.214'
     // Lombok
     compileOnly "org.projectlombok:lombok:1.18.36"
     annotationProcessor "org.projectlombok:lombok:1.18.36"
+    // PlaceholderAPI
+    implementation "me.clip:placeholderapi:2.11.6"
 }
 
 def targetJavaVersion = 21
@@ -47,6 +48,12 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
     }
+}
+
+// Настройка Shadow Jar
+shadowJar {
+    configurations = [project.configurations.shadow]
+    archiveClassifier.set('')
 }
 
 processResources {
