@@ -17,6 +17,9 @@ public class ReputationMenuOnClick implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
+        if (player.hasPermission("fusionrep.reputation")) {
+            return;
+        }
         if (event.getRightClicked() instanceof Player target) {
             if (player.isSneaking()) {
                 plugin.getReputationMenu().openMenu(player, target);

@@ -15,7 +15,7 @@ commands:
       - rep
     description: Show reputation top / Show player reputation
     usage: /rep
-    permission: fusionrep.reputation
+    permission: fusionrep.reputation.command
   fusionrepreload:
     description: Reload plugin
     usage: /fusionrepreload
