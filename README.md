@@ -1,13 +1,10 @@
 
 # English
 
----
 # FusionRep is a plugin that allows players to rate each other and compete for higher rankings
 
----
 # Functionality
 
----
 
 This plugin provides the ability to rate a player by clicking on them with a RMB in a squat. To rate opens a menu where you can choose whether to raise or lower the player's reputation
 
@@ -17,7 +14,6 @@ The menu has three types of display (changed in `config.yml`):
 - Heads
 # Commands
 
----
 
 `/reputation <player nickname>` - Shows the reputation of the player whose nickname was entered
 
@@ -27,7 +23,6 @@ The menu has three types of display (changed in `config.yml`):
 
 `/fusionrepreload` - Reloads the plugin configuration
 
----
 # Configuration
 
 ``` yml
@@ -125,19 +120,15 @@ localization:
         lore: "Close the menu"
 ```
 
----
 # Placeholders
 
----
 
 `fusion_reputation` - Shows player's reputation in white color
 
 `fusion_reputation_colored` - Shows player's reputation in color depending on reputation
 
----
 # Permissions
 
----
 `fusionrep.reputation.command` - Use `/reputation <player nickname>` and `/reputation top`
 
 `fusionrep.myreputation` - use `/myreputation`
@@ -147,20 +138,14 @@ localization:
 `fusionrep.reload` - use `/fusionrepreload`
 
 ---
----
----
----
----
+
 # Русский язык
 
----
 
 # FusionRep - плагин, который позволяет игрокам оценивать друг друга и соревноваться за более высокий рейтинг
 
----
 # Функционал
 
----
 
 Данный плагин предоставляет возможность оценки игроком, путём нажатия по нему ПКМ в приседе. Для оценки открывается меню, в котором можно выбрать, что нужно сделать: повысить или понизить репутацию игрока
 
@@ -170,7 +155,6 @@ localization:
 - Головы
 # Команды
 
----
 
 `/reputation <ник игрока>` - Показывает репутацию игрока, чей ник был введён
 
@@ -180,10 +164,8 @@ localization:
 
 `/fusionrepreload` - Перезагружает конфигурацию плагина
 
----
 # Конфигурация
 
----
 
 ``` yml
 # Сообщения в чат (ТОЛЬКО СООБЩЕНИЯ В ЧАТ!!) форматируются с помощью https://docs.advntr.dev/minimessage/format.html  
@@ -280,19 +262,15 @@ localization:
         lore: "Закрыть меню"
 ```
 
----
 # Плейсхолдеры
 
----
 
 `fusion_reputation` - Показывает репутацию игрока в белом цвете
 
 `fusion_reputation_colored` - Показывает репутацию игрока в цвете в зависимости от репутации
 
----
 # Права
 
----
 `fusionrep.reputation.command` - использование `/reputation <ник игрока>` и `/reputation top`
 
 `fusionrep.myreputation` - использование `/myreputation`
