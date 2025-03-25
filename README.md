@@ -1,7 +1,4 @@
----
-# Russian language
 
----
 ---
 # English
 
