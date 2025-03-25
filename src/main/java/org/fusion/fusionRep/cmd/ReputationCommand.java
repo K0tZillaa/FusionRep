@@ -14,15 +14,19 @@ import java.util.List;
 public class ReputationCommand implements CommandExecutor {
     private final FusionRep plugin;
 
-    private final String invalidSyntaxMessage;
-    private final String playerReputationMessage;
-    private final String topTitleMessage;
-    private final String topPlayerMessage;
-    private final String topSenderPlace;
-    private final String playerNotFoundMessage;
+    private String invalidSyntaxMessage;
+    private String playerReputationMessage;
+    private String topTitleMessage;
+    private String topPlayerMessage;
+    private String topSenderPlace;
+    private String playerNotFoundMessage;
 
     public ReputationCommand(FusionRep plugin) {
         this.plugin = plugin;
+        updateVariables();
+    }
+
+    public void updateVariables() {
         this.invalidSyntaxMessage = plugin.getCfg().getString("localization.reputation_command.usage", "Usage: /reputation <player / top>");
         this.playerReputationMessage = plugin.getCfg().getString("localization.reputation_command.player_reputation", "%player%'s reputation: %reputation%");
         this.topTitleMessage = plugin.getCfg().getString("localization.reputation_command.top.title", "=== Top 10 players by reputation ===");
@@ -70,7 +74,7 @@ public class ReputationCommand implements CommandExecutor {
 
         Player target = Bukkit.getPlayer(strings[0]);
 
-        if (!Bukkit.getOnlinePlayers().contains(target)) {
+        if (!Bukkit.getOnlinePlayers().contains(target) || target == null) {
             sender.sendMessage(plugin.getFormatMessage().parse(playerNotFoundMessage.replace("%player%", strings[0])));
             return true;
         }

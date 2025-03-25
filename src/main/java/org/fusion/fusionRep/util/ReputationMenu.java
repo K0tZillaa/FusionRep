@@ -24,20 +24,26 @@ public class ReputationMenu {
     private String itemPlusReputationButtonTitle;
     private String itemMinusReputationButtonTitle;
     private String itemExitButtonTitle;
-    private final String menuTitle;
+    private String menuTitle;
+    private int menuStyle;
 
 
     public ReputationMenu(FusionRep plugin) {
         this.plugin = plugin;
-        this.menuTitle = plugin.getConfig().getString("localization.reputation_menu.title", "Player reputation %player%");
-        this.alreadyVotedMessage = plugin.getConfig().getString("localization.reputation_menu.already_voted_message", "You have already voted for this player");
-        this.plusReputationSender = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_sender", "You have increased the player's reputation, his current reputation: %reputation%");
-        this.plusReputationTarget = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_target", "Player %player% has increased your reputation, your current reputation is: %reputation%");
-        this.minusReputationSender = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_sender", "You have lowered the player's reputation, his current reputation: %reputation%");
-        this.minusReputationTarget = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_target", "Player %player% has lowered your reputation, your current reputation is: %reputation%");
-        this.itemPlusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_button.title", "+REP");
-        this.itemMinusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_button.title", "-REP");
-        this.itemExitButtonTitle = plugin.getConfig().getString("localization.reputation_menu.exit_button.title", "Exit");
+        updateVariables();
+    }
+
+    public void updateVariables() {
+        this.menuTitle = plugin.getCfg().getString("localization.reputation_menu.title", "Player reputation %player%");
+        this.alreadyVotedMessage = plugin.getCfg().getString("localization.reputation_menu.already_voted_message", "You have already voted for this player");
+        this.plusReputationSender = plugin.getCfg().getString("localization.reputation_menu.plus_reputation_sender", "You have increased the player's reputation, his current reputation: %reputation%");
+        this.plusReputationTarget = plugin.getCfg().getString("localization.reputation_menu.plus_reputation_target", "Player %player% has increased your reputation, your current reputation is: %reputation%");
+        this.minusReputationSender = plugin.getCfg().getString("localization.reputation_menu.minus_reputation_sender", "You have lowered the player's reputation, his current reputation: %reputation%");
+        this.minusReputationTarget = plugin.getCfg().getString("localization.reputation_menu.minus_reputation_target", "Player %player% has lowered your reputation, your current reputation is: %reputation%");
+        this.itemPlusReputationButtonTitle = plugin.getCfg().getString("localization.reputation_menu.items.plus_reputation_button.title", "+REP");
+        this.itemMinusReputationButtonTitle = plugin.getCfg().getString("localization.reputation_menu.items.minus_reputation_button.title", "-REP");
+        this.itemExitButtonTitle = plugin.getCfg().getString("localization.reputation_menu.items.exit_button.title", "Exit");
+        this.menuStyle = plugin.getCfg().getInt("settings.menu.style", 1);
     }
 
     EventCreator<InventoryClickEvent> event = new EventCreator<>(InventoryClickEvent.class, event -> {
@@ -117,7 +123,7 @@ public class ReputationMenu {
         plugin.getMenuProviders().setTarget(target);
         backgroundMaterial = Material.getMaterial(plugin.getCfg().getString("settings.menu.background_material", "air").toUpperCase());
 
-        return switch (plugin.getCfg().getInt("settings.menu.style")) {
+        return switch (menuStyle) {
             case 2 -> plugin.getMenuProviders().getInventoryStyleTwo();
             case 3 -> plugin.getMenuProviders().getInventoryStyleThree();
             default -> plugin.getMenuProviders().getInventoryStyleOne();

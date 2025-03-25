@@ -28,25 +28,35 @@ public class MenuProviders {
     private Material backgroundMaterial;
     private final FusionRep plugin;
 
-    private final String itemPlusReputationButtonTitle;
-    private final String itemPlusReputationButtonLore;
-    private final String itemMinusReputationButtonTitle;
-    private final String itemMinusReputationButtonLore;
-    private final String itemExitButtonTitle;
-    private final String itemExitButtonLore;
-    private final String itemBackgroundTitle;
-    private final String itemBackgroundLore;
+    private String itemPlusReputationButtonTitle;
+    private String itemPlusReputationButtonLore;
+    private String itemMinusReputationButtonTitle;
+    private String itemMinusReputationButtonLore;
+    private String itemExitButtonTitle;
+    private String itemExitButtonLore;
+    private String itemBackgroundTitle;
+    private String itemBackgroundLore;
+    private String itemBackground;
+    private String plusHeadURL;
+    private String minusHeadURL;
 
     public MenuProviders(FusionRep plugin) {
         this.plugin = plugin;
-        this.itemPlusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_button.title", "+REP");
-        this.itemPlusReputationButtonLore = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_button.lore", "+1 to the player's reputation");
-        this.itemMinusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_button.title", "-REP");
-        this.itemMinusReputationButtonLore = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_button.lore", "-1 to the player's reputation");
-        this.itemExitButtonTitle = plugin.getConfig().getString("localization.reputation_menu.exit_button.title", "Exit");
-        this.itemExitButtonLore = plugin.getConfig().getString("localization.reputation_menu.exit_button.lore", "Close the menu");
-        this.itemBackgroundTitle = plugin.getConfig().getString("localization.reputation_menu.background.title", "");
-        this.itemBackgroundLore = plugin.getConfig().getString("localization.reputation_menu.background.lore", "Close the menu");
+        updateVariables();
+    }
+
+    public void updateVariables() {
+        this.itemPlusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.items.plus_reputation_button.title", "+REP");
+        this.itemPlusReputationButtonLore = plugin.getConfig().getString("localization.reputation_menu.items.plus_reputation_button.lore", "+1 to the player's reputation");
+        this.itemMinusReputationButtonTitle = plugin.getConfig().getString("localization.reputation_menu.items.minus_reputation_button.title", "-REP");
+        this.itemMinusReputationButtonLore = plugin.getConfig().getString("localization.reputation_menu.items.minus_reputation_button.lore", "-1 to the player's reputation");
+        this.itemExitButtonTitle = plugin.getConfig().getString("localization.reputation_menu.items.exit_button.title", "Exit");
+        this.itemExitButtonLore = plugin.getConfig().getString("localization.reputation_menu.items.exit_button.lore", "Close the menu");
+        this.itemBackgroundTitle = plugin.getConfig().getString("localization.reputation_menu.items.background.title", "");
+        this.itemBackgroundLore = plugin.getConfig().getString("localization.reputation_menu.items.background.lore", "Close the menu");
+        this.itemBackground = plugin.getCfg().getString("settings.menu.background_material", "air").toUpperCase();
+        this.plusHeadURL = plugin.getCfg().getString("settings.menu.plus_head_url", "http://textures.minecraft.net/texture/6c48ddfdcd6d98a1b0aa3c71e8dad4edde732a68b2b0a5ab142600dca7587c32");
+        this.minusHeadURL = plugin.getCfg().getString("settings.menu.minus_head_url", "http://textures.minecraft.net/texture/6f05afec2a6ec675cd5505a8f44bb6a4d556935689528321ead4edef685f2d10");
     }
 
     private final InventoryProvider inventoryStyleOne = new InventoryProvider() {
@@ -99,9 +109,9 @@ public class MenuProviders {
             for (int i = 0; i < 27; i++) {
                 contents.set(i, createItem(backgroundMaterial, itemBackgroundTitle, itemBackgroundLore));
             }
-            contents.set(10, createHead(plugin.getCfg().getString("settings.menu.plus_head_url", "http://textures.minecraft.net/texture/6c48ddfdcd6d98a1b0aa3c71e8dad4edde732a68b2b0a5ab142600dca7587c32"), itemPlusReputationButtonTitle, itemPlusReputationButtonLore));
+            contents.set(10, createHead(plusHeadURL, itemPlusReputationButtonTitle, itemPlusReputationButtonLore));
             contents.set(13, createClickedPlayerHead());
-            contents.set(16, createHead(plugin.getCfg().getString("settings.menu.minus_head_url", "http://textures.minecraft.net/texture/6f05afec2a6ec675cd5505a8f44bb6a4d556935689528321ead4edef685f2d10"), itemExitButtonTitle, itemExitButtonLore));
+            contents.set(16, createHead(minusHeadURL, itemExitButtonTitle, itemExitButtonLore));
             contents.set(26, createItem(Material.ARROW, itemExitButtonTitle, itemExitButtonLore));
         }
     };
@@ -150,6 +160,6 @@ public class MenuProviders {
     }
 
     public void setBackgroundMaterial() {
-        backgroundMaterial = Material.getMaterial(plugin.getCfg().getString("settings.menu.background_material", "air").toUpperCase());
+        backgroundMaterial = Material.getMaterial(itemBackground);
     }
 }

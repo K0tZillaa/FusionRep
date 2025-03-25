@@ -1,3 +1,6 @@
+# EN - Chat messages (CHAT MESSAGES ONLY!!) are formatted using https://docs.advntr.dev/minimessage/format.html
+# RU - Сообщения в чат (ТОЛЬКО СООБЩЕНИЯ В ЧАТ!!) форматируются с помощью https://docs.advntr.dev/minimessage/format.html
+
 # EN - Database parameters | RU - Параметры датабазы
 database:
   # EN - Database type MySQL / H2 | RU - Тип датабазы MySQl / H2
@@ -24,6 +27,10 @@ settings:
 
 # EN - Localization Settings / RU - Настройки локализации
 localization:
+  # EN - Localization of the configure reload command  / RU - Локализация команды перезагрузки конфига
+  reload_command:
+    # EN - Successful reboot message  / RU - Сообщение об успешной перезагрузке
+    reload_message: "<green>The plugin has been successfully reloaded"
   # EN - Localization of the reputation command  / RU - Локализация команды репутации
   reputation_command:
     # EN - Incorrect syntax message  / RU - Сообщение о неправильном синтаксисе

@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.fusion.fusionRep.cmd.MyReputationCommand;
+import org.fusion.fusionRep.cmd.ReloadCommand;
 import org.fusion.fusionRep.cmd.ReputationCommand;
 import org.fusion.fusionRep.event.ReputationMenuOnClick;
 import org.fusion.fusionRep.util.*;
@@ -23,6 +24,7 @@ public final class FusionRep extends JavaPlugin {
     DatabaseManager databaseManager;
     DatabaseController databaseController;
     FormatMessage formatMessage;
+    ReloadCommand reloadCommand;
 
     @Getter
     private final InventoryManager manager = new InventoryManager(this);
@@ -42,11 +44,24 @@ public final class FusionRep extends JavaPlugin {
 
         Objects.requireNonNull(this.getCommand("myreputation")).setExecutor(myReputationCommand = new MyReputationCommand(this));
         Objects.requireNonNull(this.getCommand("reputation")).setExecutor(reputationCommand = new ReputationCommand(this));
+        Objects.requireNonNull(this.getCommand("fusionrepreload")).setExecutor(reloadCommand = new ReloadCommand(this));
 
         Bukkit.getPluginManager().registerEvents(reputationMenuOnClick = new ReputationMenuOnClick(this), this);
 
         new Placeholders(this).register();
     }
+
+    public void reloadCfg() {
+        reloadConfig();
+        cfg = getConfig();
+        reloadCommand.updateVariables();
+        myReputationCommand.updateVariables();
+        reputationCommand.updateVariables();
+        menuProviders.updateVariables();
+        menuProviders.setBackgroundMaterial();
+        reputationMenu.updateVariables();
+    }
+
 
     @Override
     public void onDisable() {

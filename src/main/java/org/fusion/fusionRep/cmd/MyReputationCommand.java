@@ -11,10 +11,14 @@ import org.jetbrains.annotations.NotNull;
 public class MyReputationCommand implements CommandExecutor {
     private final FusionRep plugin;
 
-    private final String playerReputationMessage;
+    private String playerReputationMessage;
 
     public MyReputationCommand(FusionRep plugin) {
         this.plugin = plugin;
+        updateVariables();
+    }
+
+    public void updateVariables() {
         this.playerReputationMessage = plugin.getCfg().getString("localization.my_reputation_command.player_reputation", "Your reputation: %reputation%");
     }
 

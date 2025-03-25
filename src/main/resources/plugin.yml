@@ -9,8 +9,14 @@ commands:
       - myrep
     description: Show your reputation
     usage: /myrep
+    permission: fusionrep.myreputation
   reputation:
     aliases:
       - rep
     description: Show reputation top / Show player reputation
     usage: /rep
+    permission: fusionrep.reputation
+  fusionrepreload:
+    description: Reload plugin
+    usage: /fusionrepreload
+    permission: fusionrep.reload
