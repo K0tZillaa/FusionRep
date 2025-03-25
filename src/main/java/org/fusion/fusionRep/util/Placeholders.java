@@ -14,7 +14,7 @@ public class Placeholders extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "fusionchat";
+        return "fusion";
     }
 
     @Override
@@ -46,6 +46,20 @@ public class Placeholders extends PlaceholderExpansion {
         if (onlinePlayer == null) {
             return "";
         }
+        if (params.startsWith("reputation_colored")) {
+            return formatReputation(plugin.getDatabaseController().getReputation(onlinePlayer));
+        } else if (params.startsWith("reputation")) {
+            return "" + plugin.getDatabaseController().getReputation(onlinePlayer);
+        }
         return "";
+    }
+
+    private String formatReputation(int reputation) {
+        if (reputation < 0)
+            return "§c" + reputation;
+        else if (reputation == 0)
+            return "§e" + reputation;
+        else
+            return "§a" + reputation;
     }
 }

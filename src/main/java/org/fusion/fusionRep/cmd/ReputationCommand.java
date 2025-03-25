@@ -41,8 +41,13 @@ public class ReputationCommand implements CommandExecutor {
         }
 
         if (strings[0].equalsIgnoreCase("top")) {
-            List<String> topPlayers = plugin.getDatabaseController().getTopReputationPlayers();
+            if (commandSender instanceof Player) {
+                if (plugin.getDatabaseController().getReputation((Player) commandSender) == 0) {
+                    plugin.getDatabaseController().setReputation((Player) commandSender, 0);
+                }
+            }
 
+            List<String> topPlayers = plugin.getDatabaseController().getTopReputationPlayers();
             sender.sendMessage(plugin.getFormatMessage().parse(topTitleMessage));
             int rank = 1;
             for (String playerInfo : topPlayers) {

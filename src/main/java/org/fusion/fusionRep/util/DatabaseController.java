@@ -21,6 +21,34 @@ public class DatabaseController {
         dataSource = plugin.getDatabaseManager().getDataSource();
     }
 
+    public void recordVote(String voterUuid, String targetUuid) {
+        String query = "INSERT INTO FUSION_VOTES (voter_uuid, target_uuid) VALUES (?, ?)";
+        try (Connection connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(query)) {
+            statement.setString(1, voterUuid);
+            statement.setString(2, targetUuid);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Voice recording error: " + e.getMessage());
+        }
+    }
+
+    public boolean hasVoted(String voterUuid, String targetUuid) {
+        String query = "SELECT COUNT(*) FROM FUSION_VOTES WHERE voter_uuid = ? AND target_uuid = ?";
+        try (Connection connection = dataSource.getConnection();
+             var statement = connection.prepareStatement(query)) {
+            statement.setString(1, voterUuid);
+            statement.setString(2, targetUuid);
+            var resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Voice verification error: " + e.getMessage());
+        }
+        return false;
+    }
+
     public void setReputation(Player player, int reputation) {
         updateDataSource();
 
@@ -50,10 +78,9 @@ public class DatabaseController {
             }
 
             statement.executeUpdate();
-            plugin.getLogger().info("Репутация игрока " + playerName + " успешно обновлена: " + reputation);
 
         } catch (SQLException e) {
-            plugin.getLogger().severe("Ошибка при обновлении репутации игрока: " + e.getMessage());
+            plugin.getLogger().severe("Error when updating a player's reputation: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -76,10 +103,9 @@ public class DatabaseController {
                 }
             }
 
-            plugin.getLogger().info("Получена репутация игрока " + player.getName() + ": " + reputation);
 
         } catch (SQLException e) {
-            plugin.getLogger().severe("Ошибка при получении репутации игрока: " + e.getMessage());
+            plugin.getLogger().severe("Error when getting player's reputation: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -103,7 +129,7 @@ public class DatabaseController {
             }
 
         } catch (SQLException e) {
-            plugin.getLogger().severe("Ошибка при получении топ-10 игроков: " + e.getMessage());
+            plugin.getLogger().severe("Error in getting top 10 players: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -129,7 +155,7 @@ public class DatabaseController {
             }
 
         } catch (SQLException e) {
-            plugin.getLogger().severe("Ошибка при определении места игрока: " + e.getMessage());
+            plugin.getLogger().severe("Error in determining a player's position: " + e.getMessage());
             e.printStackTrace();
         }
 

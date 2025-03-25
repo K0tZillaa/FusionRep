@@ -27,35 +27,37 @@ localization:
   # EN - Localization of the reputation command  / RU - Локализация команды репутации
   reputation_command:
     # EN - Incorrect syntax message  / RU - Сообщение о неправильном синтаксисе
-    usage: "<green>Usage: /reputation <player / top>"
+    usage: "<red>Usage: /reputation <player / top>"
     # EN - Player reputation message / RU - Сообщение с репутацией игрока
-    player_reputation: "<green>%player%'s reputation: %reputation%"
+    player_reputation: "<blue>%player%'s</blue> reputation: <blue>%reputation%"
     # EN - Message that the player is not found / RU - Сообщение о том, что игрок не найден
-    player_not_found_message: "<green>Player not found or not online."
+    player_not_found_message: "<red>Player not found or not online."
     # EN - Localization of the top by reputation / RU - Локализация топа по репутации
     top:
       # EN - Title of the reputation top list / RU - Оглавление списка топа репутации
-      title: "<green>=== Top 10 players by reputation% ==="
+      title: "<blue>=== Top 10 players by reputation ==="
       # EN - Reputation top list item / RU - Пункт списка топа репутации
-      player_in_top: "<green>%rank%. %player% %reputation%"
+      player_in_top: "<gray>%rank%.</gray> %player% <blue>%reputation%"
       # EN - Sender's place in the ranking / RU - Место отправителя в рейтинге
-      sender_place: "<green>Your place in the rating: %rank%"
+      sender_place: "Your place in the rating: <blue>%rank%"
   # EN - Localization of my reputation command / RU - Локализация команды своей репутации
   my_reputation_command:
     # EN - Player reputation message / RU - Сообщение с репутацией игрока
-    player_reputation: "<green>Your reputation: %reputation%"
+    player_reputation: "Your reputation: <blue>%reputation%"
   # EN - Localization of the reputation menu / RU - Локализация меню репутации
   reputation_menu:
     # EN - Menu title | RU - Название меню
     title: "%player%'s reputation"
+    # EN - Message to sender if he has already voted for a player | RU - Сообщение отправителю, если он уже голосовал за игрока
+    already_voted_message: "<red>You have already voted for this player"
     #  EN - Message to sender about reputation increase / RU - Сообщение отправителю о повышении репутации
-    plus_reputation_sender: "<green>You have increased the player's reputation, his current reputation: %reputation%"
+    plus_reputation_sender: "You have increased the player's reputation, his current reputation: <blue>%reputation%"
     #  EN - Communicating the purpose of reputation enhancement / RU - Сообщение цели о повышении репутации
-    plus_reputation_target: "<green>Player %player% has increased your reputation, your current reputation is: %reputation%"
+    plus_reputation_target: "Player <blue>%player%</blue> has increased your reputation, your current reputation is: <blue>%reputation%"
     #  EN - Message to sender about reputation downgrade / RU - Сообщение отправителю о понижении репутации
-    minus_reputation_sender: "<green>You have lowered the player's reputation, his current reputation: %reputation%"
+    minus_reputation_sender: "You have lowered the player's reputation, his current reputation: <blue>%reputation%"
     #  EN - Communicating the target of a reputation downgrade / RU - Сообщение цели о понижении репутации
-    minus_reputation_target: "<green>Player %player% has lowered your reputation, your current reputation is: %reputation%"
+    minus_reputation_target: "Player <blue>%player%</blue> has lowered your reputation, your current reputation is: <blue>%reputation%"
     #  EN - Items on the menu / RU - Предметы в меню
     items:
       #  EN - Reputation boost button / RU - Кнопка повышения репутации

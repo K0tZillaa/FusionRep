@@ -16,6 +16,7 @@ public class ReputationMenu {
     private FusionRep plugin;
     private static Material backgroundMaterial = Material.BARRIER;
     private Player target;
+    private String alreadyVotedMessage;
     private String plusReputationSender;
     private String plusReputationTarget;
     private String minusReputationSender;
@@ -29,6 +30,7 @@ public class ReputationMenu {
     public ReputationMenu(FusionRep plugin) {
         this.plugin = plugin;
         this.menuTitle = plugin.getConfig().getString("localization.reputation_menu.title", "Player reputation %player%");
+        this.alreadyVotedMessage = plugin.getConfig().getString("localization.reputation_menu.already_voted_message", "You have already voted for this player");
         this.plusReputationSender = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_sender", "You have increased the player's reputation, his current reputation: %reputation%");
         this.plusReputationTarget = plugin.getConfig().getString("localization.reputation_menu.plus_reputation_target", "Player %player% has increased your reputation, your current reputation is: %reputation%");
         this.minusReputationSender = plugin.getConfig().getString("localization.reputation_menu.minus_reputation_sender", "You have lowered the player's reputation, his current reputation: %reputation%");
@@ -48,15 +50,21 @@ public class ReputationMenu {
             player.closeInventory();
         } else if (Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName().equalsIgnoreCase(itemPlusReputationButtonTitle)) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-            plusReputation();
-            sender.sendMessage(plugin.getFormatMessage().parse(player, plusReputationSender.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
-            targetAudience.sendMessage(plugin.getFormatMessage().parse(player, plusReputationTarget.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", player.getName())));
+            if (plusReputation(player, target)) {
+                sender.sendMessage(plugin.getFormatMessage().parse(player, plusReputationSender.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
+                targetAudience.sendMessage(plugin.getFormatMessage().parse(player, plusReputationTarget.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", player.getName())));
+            } else {
+                sender.sendMessage(plugin.getFormatMessage().parse(player, alreadyVotedMessage.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
+            }
             player.closeInventory();
         } else if (Objects.requireNonNull(event.getCurrentItem().getItemMeta()).getDisplayName().equalsIgnoreCase(itemMinusReputationButtonTitle)) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-            minusReputation();
-            sender.sendMessage(plugin.getFormatMessage().parse(player, minusReputationSender.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
-            targetAudience.sendMessage(plugin.getFormatMessage().parse(player, minusReputationTarget.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", player.getName())));
+            if (minusReputation(player, target)) {
+                sender.sendMessage(plugin.getFormatMessage().parse(player, minusReputationSender.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
+                targetAudience.sendMessage(plugin.getFormatMessage().parse(player, minusReputationTarget.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", player.getName())));
+            } else {
+                sender.sendMessage(plugin.getFormatMessage().parse(player, alreadyVotedMessage.replace("%reputation%", String.valueOf(getReputation())).replace("%player%", target.getName())));
+            }
             player.closeInventory();
         }
     });
@@ -73,14 +81,32 @@ public class ReputationMenu {
                 .open(player);
     }
 
-    private void plusReputation() {
+    private boolean plusReputation(Player player, Player target) {
+        String voterUuid = player.getUniqueId().toString();
+        String targetUuid = target.getUniqueId().toString();
+
+        if (plugin.getDatabaseController().hasVoted(voterUuid, targetUuid)) {
+            return false;
+        }
+
         int rep = plugin.getDatabaseController().getReputation(target);
         plugin.getDatabaseController().setReputation(target, rep + 1);
+        plugin.getDatabaseController().recordVote(voterUuid, targetUuid);
+        return true;
     }
 
-    private void minusReputation() {
+    private boolean minusReputation(Player player, Player target) {
+        String voterUuid = player.getUniqueId().toString();
+        String targetUuid = target.getUniqueId().toString();
+
+        if (plugin.getDatabaseController().hasVoted(voterUuid, targetUuid)) {
+            return false;
+        }
+
         int rep = plugin.getDatabaseController().getReputation(target);
         plugin.getDatabaseController().setReputation(target, rep - 1);
+        plugin.getDatabaseController().recordVote(voterUuid, targetUuid);
+        return true;
     }
 
     private int getReputation() {

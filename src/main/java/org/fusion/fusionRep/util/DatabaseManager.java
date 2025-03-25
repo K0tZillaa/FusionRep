@@ -70,17 +70,23 @@ public class DatabaseManager {
     }
 
     public void initializeDatabase() {
-        String createTableQuery = "CREATE TABLE IF NOT EXISTS FUSION_REPUTATION (" +
+        String createReputationTableQuery = "CREATE TABLE IF NOT EXISTS FUSION_REPUTATION (" +
                 "uuid VARCHAR(36) PRIMARY KEY," +
                 "player_name  VARCHAR(36)," +
                 "player_reputation INTEGER)";
 
+        String createVotesTableQuery = "CREATE TABLE IF NOT EXISTS FUSION_VOTES (" +
+                "voter_uuid VARCHAR(36) NOT NULL," +
+                "target_uuid VARCHAR(36) NOT NULL," +
+                "PRIMARY KEY (voter_uuid, target_uuid))";
+
         try (Connection connection = dataSource.getConnection();
              Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(createTableQuery);
-            plugin.getLogger().info("Таблица FUSION_REPUTATION успешно создана или уже существует.");
+            stmt.executeUpdate(createReputationTableQuery);
+            stmt.executeUpdate(createVotesTableQuery);
+            plugin.getLogger().info("Таблицы FUSION_REPUTATION и FUSION_VOTES успешно созданы или уже существуют.");
         } catch (SQLException e) {
-            plugin.getLogger().severe("Ошибка при создании таблицы игрока: " + e.getMessage());
+            plugin.getLogger().severe("Ошибка при создании таблиц: " + e.getMessage());
         }
     }
 

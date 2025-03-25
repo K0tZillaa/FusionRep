@@ -23,6 +23,10 @@ public class MyReputationCommand implements CommandExecutor {
         if (!(commandSender instanceof Player player)) {
             return true;
         }
+        if (plugin.getDatabaseController().getReputation(player) == 0) {
+            plugin.getDatabaseController().setReputation(player, 0);
+        }
+
         Audience sender = (Audience) commandSender;
 
         int reputation = plugin.getDatabaseController().getReputation(player);
